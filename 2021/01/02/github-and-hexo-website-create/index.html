@@ -14,7 +14,7 @@
 <meta property="og:description" content="页内导航  搭建 Node.js 环境 安装配置 Hexo GitHub 注册和配置GitHub Pages 搭建 Git 环境 配置 Git 个人信息 关联 Hexo 与 GitHub 获得个人网站域名 GitHub Pages 地址绑定个人域名 小知识++">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-01-02T15:21:07.000Z">
-<meta property="article:modified_time" content="2021-01-03T04:40:14.359Z">
+<meta property="article:modified_time" content="2021-01-03T04:48:02.813Z">
 <meta property="article:author" content="Lance">
 <meta property="article:tag" content="Hexo">
 <meta name="twitter:card" content="summary">
@@ -118,7 +118,7 @@
 <p>查看版本号：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo version</span><br></pre></td></tr></table></figure>
 <p>安装 Hexo 完成后，请执行下列命令来初始化 Hexo，用户名改成你的，Hexo 将会在指定文件夹中新建所需要的文件。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo init bxm0927.github.io</span><br><span class="line"><span class="built_in">cd</span> bxm0927.github.io</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo init myblog.github.io</span><br><span class="line"><span class="built_in">cd</span> myblog.github.io</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
 <p>新建完成后，指定文件夹的目录结构如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── .deploy         <span class="comment">#需要部署的文件</span></span><br><span class="line">├── node_modules    <span class="comment">#Hexo插件</span></span><br><span class="line">├── public          <span class="comment">#生成的静态网页文件</span></span><br><span class="line">├── scaffolds       <span class="comment">#模板</span></span><br><span class="line">├── <span class="built_in">source</span>          <span class="comment">#博客正文和其他源文件，404、favicon、CNAME 都应该放在这里</span></span><br><span class="line">| ├── _drafts       <span class="comment">#草稿</span></span><br><span class="line">| └── _posts        <span class="comment">#文章</span></span><br><span class="line">├── themes          <span class="comment">#主题</span></span><br><span class="line">├── _config.yml     <span class="comment">#全局配置文件</span></span><br><span class="line">└── package.json    <span class="comment">#npm 依赖等</span></span><br></pre></td></tr></table></figure>
 <p>运行本地 Hexo 服务</p>
