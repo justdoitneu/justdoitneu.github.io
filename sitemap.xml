@@ -2,21 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://example.com/2021/01/01/Hello-Selina/</loc>
+    <loc>https://www.lovecosmos.cn/2021/01/01/Hello-Selina/</loc>
     
     <lastmod>2021-01-03</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2021/01/02/github-and-hexo-website-create/</loc>
+    <loc>https://www.lovecosmos.cn/2021/01/02/github-and-hexo-website-create/</loc>
     
     <lastmod>2021-01-03</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2021/01/01/hello-world/</loc>
+    <loc>https://www.lovecosmos.cn/2021/01/01/hello-world/</loc>
     
     <lastmod>2021-01-02</lastmod>
     
@@ -24,23 +24,23 @@
   
 
   <url>
-    <loc>http://example.com/</loc>
-    <lastmod>2021-01-03</lastmod>
+    <loc>https://www.lovecosmos.cn/</loc>
+    <lastmod>2021-01-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   
   <url>
-    <loc>http://example.com/tags/Hello/</loc>
-    <lastmod>2021-01-03</lastmod>
+    <loc>https://www.lovecosmos.cn/tags/Hello/</loc>
+    <lastmod>2021-01-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/Hexo/</loc>
-    <lastmod>2021-01-03</lastmod>
+    <loc>https://www.lovecosmos.cn/tags/Hexo/</loc>
+    <lastmod>2021-01-04</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
