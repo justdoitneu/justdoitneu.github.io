@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.lovecosmos.cn/2021/01/01/Hello-Selina/</loc>
+    <loc>https://www.lovecosmos.cn/2021/01/09/Kafka-%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0/</loc>
     
     <lastmod>2021-01-09</lastmod>
     
@@ -10,6 +10,13 @@
   
   <url>
     <loc>https://www.lovecosmos.cn/tags/index.html</loc>
+    
+    <lastmod>2021-01-09</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.lovecosmos.cn/2021/01/01/Hello-Selina/</loc>
     
     <lastmod>2021-01-09</lastmod>
     
@@ -54,6 +61,20 @@
   
   <url>
     <loc>https://www.lovecosmos.cn/tags/Hexo/</loc>
+    <lastmod>2021-01-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lovecosmos.cn/tags/Kafka/</loc>
+    <lastmod>2021-01-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.lovecosmos.cn/tags/%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6/</loc>
     <lastmod>2021-01-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
