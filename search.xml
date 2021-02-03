@@ -124,7 +124,7 @@
 <p>链接：<br>Kafka官网：<a href="http://kafka.apache.org/">http://kafka.apache.org/</a><br>Kafka深度解析：<a href="http://www.jasongj.com/2015/01/02/Kafka%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/">http://www.jasongj.com/2015/01/02/Kafka%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/</a><br>零拷贝：<a href="https://zhuanlan.zhihu.com/p/78335525">https://zhuanlan.zhihu.com/p/78335525</a></p>
 ]]></content>
       <categories>
-        <category>技术积累</category>
+        <category>技术</category>
       </categories>
       <tags>
         <tag>Kafka</tag>
@@ -214,6 +214,140 @@
 ]]></content>
       <tags>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>英语语法概述</title>
+    <url>/2021/01/24/%E8%8B%B1%E8%AF%AD%E8%AF%AD%E6%B3%95%E6%A6%82%E8%BF%B0/</url>
+    <content><![CDATA[<p>导语：英语语法的目的是造句，其核心就是<strong>动词</strong>，动词几乎能串起所有整个英语语法体系。<br><img src="/images/articleimg/EnglishGrammar.png" alt="语法体系的主体框架"></p>
+<h3 id="简单句-simple-sentences"><a href="#简单句-simple-sentences" class="headerlink" title="简单句(simple sentences)"></a>简单句(simple sentences)</h3><p>几乎所有的英语句子都是：什么+怎么样结构，即主＋谓结构<br>主语: 人或物<br>谓语: 发生了什么事（”动作”）<br>简单句的5种基本句型：</p>
+<table>
+<thead>
+<tr>
+<th>动作</th>
+<th>动词种类</th>
+<th>句型</th>
+<th>例句</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>可以独立完成的动作</td>
+<td>不及物动词</td>
+<td>主语 ＋（不及物）动词</td>
+<td>papa rabbit sleeps.</td>
+</tr>
+<tr>
+<td>有一个动作的承受者</td>
+<td>单及物动词</td>
+<td>主语＋（及物）动词＋宾语</td>
+<td>papa rabbit likes you.</td>
+</tr>
+<tr>
+<td>有两个动作承受者</td>
+<td>双及物动词</td>
+<td>主语＋（双及物）动词＋间宾＋直宾</td>
+<td>papa rabbit tea ches you english.</td>
+</tr>
+<tr>
+<td>只有一个动作承受者（ 不同于2）</td>
+<td>复杂及物动词</td>
+<td>主语＋（复杂及物）动词＋宾语＋（宾语）补语</td>
+<td>papa rabbit considers you smart.</td>
+</tr>
+<tr>
+<td>不是个”动作”</td>
+<td>（连）系动词</td>
+<td>主语 ＋ （系）动词＋（主语）补语（也叫表语）</td>
+<td>papa rabbit is tall.</td>
+</tr>
+</tbody></table>
+<p>PS：<br>1.宾语：动作的承受者。<br>2.间接宾语一般为人，.直接宾语一般为物。如上教授的知识是英语，而知识的接受对象是你。这里可以讲兔教英语，完整了，英语是直接宾语；但讲兔教你，没上下文的话是缺内容的，所以你是间接宾语。<br>3.连系动词：linking而已，代表“=”，即赋予主语某种性质状态划等号的动词，后者为前者的一种属性。<br>4.及物动词：没有承受者就没有实际意义，如like。<br>5.宾语补足语（补语）：补充承受者的信息才能使得句意完整，复杂及物动词必须要该结构才能组成句子，如上表的smart。<br>6.主语补足语（表语）：补充说明主语的属性，用于主系表中。<br>7.谓语和谓语动词：句子主语后面余下的句子部分就是谓语；谓语动词知识谓语的一部分。<br>8.7强调谓语动词，是因为还有非谓语动词。<br>9.定语：用来修饰主语或宾语。eg：<strong>the little white</strong> rabbit ate <strong>a large</strong> carrot.<br>10.状语：用来修饰谓语动词。eg：the rabbit ate <strong>quickly</strong>.<br>11.同位语：用来把主语或宾语用不同方式再说一遍，像唐僧。。eg：papa rabbit, <strong>an english teacher</strong>, eats a carrot. eg：我，秦始皇，打钱！</p>
+<p>英语中涉及的所有<strong>句子成分</strong>只有8种，上面都分析到了，这里做个小结：<br><img src="/images/articleimg/partsOfSpeech.png" alt="句子8种成分"></p>
+<h3 id="复合句-amp-复杂句"><a href="#复合句-amp-复杂句" class="headerlink" title="复合句 &amp; 复杂句"></a>复合句 &amp; 复杂句</h3><p>上面讲的都为简单句，但平时不都是简单句的使用，会把简单句组合，形成复合句和复杂句。<br>compound sentences 复合句（并列句）：简单句+简单句，句子简单的叠加，是并列关系。</p>
+<p>complex sentences 复杂句：一个句子套在另一个句子里，可以一直套娃，是从属关系。（坑：有的语法书叫成了复合句，误导人儿）<br>主句和从句：句子套句子操作：语法中分别叫main clause 主句；subordinate clause 从句。从句说白了就是把简单句修改一下，做另一个句子的<strong>句子成分</strong>。<br>英语这种“套娃”的从句，和中文习惯差别大，所以是语法的难点之一。<br><img src="/images/articleimg/subordinateClause.png" alt="从句"></p>
+<h3 id="词类"><a href="#词类" class="headerlink" title="词类"></a>词类</h3><p>词性（词类）：句子成分和单词类型是两个概念，就是同一类句子成分里可能有不同的词类。<br>英语的10大词类：</p>
+<table>
+<thead>
+<tr>
+<th>中文</th>
+<th>english</th>
+<th>说明</th>
+<th>例句</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>名词</td>
+<td>nouns</td>
+<td>表人和物</td>
+<td><strong>papa rabbit</strong> is a <strong>rabbit</strong>.</td>
+</tr>
+<tr>
+<td>冠词</td>
+<td>articles</td>
+<td>说明人和物</td>
+<td>papa rabbit is <strong>a</strong> rabbit</td>
+</tr>
+<tr>
+<td>代词</td>
+<td>pronouns</td>
+<td>代替人和物</td>
+<td><strong>i</strong> am a rabbit.</td>
+</tr>
+<tr>
+<td>形容词</td>
+<td>adjectives</td>
+<td>形容人和物</td>
+<td>i am a <strong>smart</strong> rabbit</td>
+</tr>
+<tr>
+<td>数词</td>
+<td>numerals</td>
+<td>表数量</td>
+<td>i ate <strong>two</strong> carrots.</td>
+</tr>
+<tr>
+<td>副词</td>
+<td>adverbs</td>
+<td>修饰动词或形容词</td>
+<td>i ate two carrots <strong>quickly</strong>.</td>
+</tr>
+<tr>
+<td>介词</td>
+<td>prepositions</td>
+<td>表示和其他词的关系</td>
+<td>i ate two carrots <strong>with</strong> chopsticks.</td>
+</tr>
+<tr>
+<td>叹词</td>
+<td>interjections</td>
+<td>表感叹</td>
+<td><strong>ah</strong>, the carrot is tasty.</td>
+</tr>
+<tr>
+<td>连词</td>
+<td>conjunctions</td>
+<td>连接词和句</td>
+<td>i ate two carrots <strong>and</strong> a potato, <strong>because</strong> i was hungry.</td>
+</tr>
+<tr>
+<td>动词</td>
+<td>verbs</td>
+<td>表动作</td>
+<td>前面的重点，写好多了，这里不写了</td>
+</tr>
+</tbody></table>
+<p>加幅图~ 看一下句子成分和词类的关系。<br><strong>每种句子成分，除了谓语动词一定是动词外，其他都可能包含不同的词类。</strong><br><img src="/images/articleimg/sentencesAndWords.png" alt="句子成分&amp;词类"></p>
+<h3 id="谓语动词“三大本领”"><a href="#谓语动词“三大本领”" class="headerlink" title="谓语动词“三大本领”"></a>谓语动词“三大本领”</h3><p>表达动作的<strong>时间-状态-语气</strong>，也称ATM（Aspect-Tense-Mood）。<br>1.表示动作的时间：<br>2.表示动作的状态：<br>合称时态：<br>时态：就是谓语动词的时间和状态的排列组合！理论上有4种时间*4状态=16种时态。是英语难点之一，因为中文动词没有这个特性。<br>2.表示动作的假设、情感等：<br>也叫动词的<strong>语气</strong>，这是语法的“语气”（不是平时说话的语气。。）<br>虚拟语气：表意愿、和事实相反的假设等。if i <strong>were</strong> a rabbit.<br><img src="/images/articleimg/verb.png" alt="谓语动词的3个特点"><br>助动词：因为谓语动词往往不能独立完成ATM，也无法独立完成表示否定、可能性、必须性的意思。因此需要另一类词的帮助完成任务，即助动词。它没有实意，只是帮助谓语动词的小伙伴。<br>下面是它协助的一个小例子：<br><img src="/images/articleimg/auxiliaryVerbs.png" alt="助动词"><br>很多助动词，也可以做实义动词，甚至其他词性。<strong>千万不要把助动词和它的其他身份混淆</strong>。其他身份eg：can：易拉罐；do：做某事；have：拥有；be：存在。</p>
+<h3 id="非谓语动词"><a href="#非谓语动词" class="headerlink" title="非谓语动词"></a>非谓语动词</h3><p>非谓语动词：<strong>是改动后的谓语动词</strong>。可以充当出谓语动词外的所有句子成分；取代几乎<strong>所有的从句</strong>，从而<strong>简化句子</strong>。但是非谓语动词同时也丧失了ATM的本领。。<br>它以不同形式出现在句中：有动词不定时、现在分词、动名词、过去分词，它们与谓语动词的不同状态看起来很像，需要结合句子成分区分，也是语法的一个难点。如下：<br><img src="/images/articleimg/verbs2.png" alt="非谓语动词的形式&amp;与谓语动词"></p>
+<h3 id="太长不看版本"><a href="#太长不看版本" class="headerlink" title="太长不看版本"></a>太长不看版本</h3><p>英语语法的核心就是动词<br>动词<br>谓语动词<br>（囊括 主语，谓语动词，宾语，宾语补语，主语补语（表语））<br>  不及物动词—主 动<br>  单及物动词—主 动 宾<br>  双及物动词—主 动 间宾 直宾<br>  混合及物动词—主 动 宾 宾补<br>  系动词—主 动 表<br>  定语，状语，表语<br> 复合句（并列）<br> 复杂句（复杂）<br>  主句<br>  从句（可以充当所有句子成分）<br>   句子成分可以由词类充当（词类：动词，名词，代词，冠词，形容词，数词，副词，介词，叹词，连词）<br> 谓语动词可以表达ATM（时间，状态，语气）等，但是需要用到助动词<br>  助动词帮助否定动词表达时态 语气 否定 被动 可能 义务…<br>非谓语动词<br> 简化句子</p>
+<p>英语语法细节很多，本文仅整理了一个脉络，如有错漏，请指正。</p>
+<p>参考资料：<br>1.视频讲英语语法体系：<a href="https://www.bilibili.com/video/BV1r54y1m7gd?from=search&amp;seid=13838203267352976271">https://www.bilibili.com/video/BV1r54y1m7gd?from=search&amp;seid=13838203267352976271</a><br>2.补充语法概述资料：<a href="https://www.zhihu.com/question/30030877/answer/1253564096">https://www.zhihu.com/question/30030877/answer/1253564096</a></p>
+]]></content>
+      <categories>
+        <category>英语语法</category>
+      </categories>
+      <tags>
+        <tag>英语 - 语法</tag>
       </tags>
   </entry>
 </search>
