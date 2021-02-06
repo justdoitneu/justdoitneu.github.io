@@ -87,7 +87,7 @@
 <td align="left">Follower跟随Leader，所有写请求都通过Leader路由，数据变更会广播给所有Follower，Follower与Leader保持数据同步。如果Leader失效，则从Follower中选举出一个新的Leader。当Follower与Leader挂掉、卡住或者同步太慢，leader会把这个follower从“in sync replicas”（ISR）列表中删除，重新创建一个Follower。</td>
 </tr>
 </tbody></table>
-<h3 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h3><p><img src="/images/articleimg/kafka%E6%9E%B6%E6%9E%84%E5%9B%BE.png" alt="架构"><br>如上图所示，一个典型的Kafka集群中包含若干Producer（可以是web前端产生的Page View，或者是服务器日志，系统CPU、Memory等），若干broker（Kafka支持水平扩展，一般broker数量越多，集群吞吐率越高），若干Consumer Group，以及一个Zookeeper集群。Kafka通过Zookeeper管理集群配置，选举leader，以及在Consumer Group发生变化时进行rebalance。Producer使用push模式将消息发布到broker，Consumer使用pull模式从broker订阅并消费消息。</p>
+<h3 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h3><p><img src= "/img/loading.gif" data-lazy-src="/images/articleimg/kafka%E6%9E%B6%E6%9E%84%E5%9B%BE.png" alt="架构"><br>如上图所示，一个典型的Kafka集群中包含若干Producer（可以是web前端产生的Page View，或者是服务器日志，系统CPU、Memory等），若干broker（Kafka支持水平扩展，一般broker数量越多，集群吞吐率越高），若干Consumer Group，以及一个Zookeeper集群。Kafka通过Zookeeper管理集群配置，选举leader，以及在Consumer Group发生变化时进行rebalance。Producer使用push模式将消息发布到broker，Consumer使用pull模式从broker订阅并消费消息。</p>
 <h3 id="工作流程："><a href="#工作流程：" class="headerlink" title="工作流程："></a>工作流程：</h3><ol>
 <li>启动 ZooKeeper 的 server；</li>
 <li>启动 Kafka 的 server；</li>
@@ -95,7 +95,7 @@
 <li>Consumer 通过 ZooKeeper 找到 Broker，然后再主动 pull 数据。</li>
 </ol>
 <h3 id="Kafka零拷贝技术"><a href="#Kafka零拷贝技术" class="headerlink" title="Kafka零拷贝技术"></a>Kafka零拷贝技术</h3><p>kafka的高性能是通过宏观架构、分布式partition存储、ISR数据同步、高效利用磁盘/系统特性。零拷贝技术属于利用系统特性的内容。</p>
-<h4 id="传统IO流程："><a href="#传统IO流程：" class="headerlink" title="传统IO流程："></a>传统IO流程：</h4><p>比如读文件，再从socket发送出去，经过4次copy，如下图所示。<br><img src="/images/articleimg/kafkatraditioncopy.jpg" alt="传统拷贝"><br>1、第一次：将磁盘文件，读取到操作系统内核缓冲区；<br>2、第二次：将内核缓冲区的数据，copy到application应用程序的buffer；<br>3、第三步：将application应用程序buffer中的数据，copy到socket网络发送缓冲区(属于操作系统内核的缓冲区)；<br>4、第四次：将socket buffer的数据，copy到网卡，由网卡进行网络传输。<br>在应用不需要修改数据的场景中，第二三次拷贝到用户空间的操作是冗余的。而且实际IO读写，需要进行IO中断，需要CPU响应中断(带来上下文切换)，尽管后来引入DMA来接管CPU的中断请求，但四次copy仍然是对效率的浪费。</p>
+<h4 id="传统IO流程："><a href="#传统IO流程：" class="headerlink" title="传统IO流程："></a>传统IO流程：</h4><p>比如读文件，再从socket发送出去，经过4次copy，如下图所示。<br><img src= "/img/loading.gif" data-lazy-src="/images/articleimg/kafkatraditioncopy.jpg" alt="传统拷贝"><br>1、第一次：将磁盘文件，读取到操作系统内核缓冲区；<br>2、第二次：将内核缓冲区的数据，copy到application应用程序的buffer；<br>3、第三步：将application应用程序buffer中的数据，copy到socket网络发送缓冲区(属于操作系统内核的缓冲区)；<br>4、第四次：将socket buffer的数据，copy到网卡，由网卡进行网络传输。<br>在应用不需要修改数据的场景中，第二三次拷贝到用户空间的操作是冗余的。而且实际IO读写，需要进行IO中断，需要CPU响应中断(带来上下文切换)，尽管后来引入DMA来接管CPU的中断请求，但四次copy仍然是对效率的浪费。</p>
 <h4 id="零拷贝在kafka的应用："><a href="#零拷贝在kafka的应用：" class="headerlink" title="零拷贝在kafka的应用："></a>零拷贝在kafka的应用：</h4><p>零拷贝并不是不需要拷贝，而是减少不必要的拷贝次数。通常是说在IO读写过程中。<br>Kafka在以下两个流程中实现了高效读取磁盘的特性（通常磁盘比内存性能差距较大）。</p>
 <ul>
 <li>网络数据持久化到磁盘 (Producer 到 Broker)</li>
@@ -108,7 +108,7 @@
 <h4 id="零拷贝技术："><a href="#零拷贝技术：" class="headerlink" title="零拷贝技术："></a>零拷贝技术：</h4><ul>
 <li><p>mmap(Memory Mapped Files)<br>简称mmap，将磁盘文件映射到进程的虚拟地址中，用户可以通过对内存的操作完成对应文件的读写，省去了用户空间到内核空间的开销。<br>mmap有一个缺点是不可靠，写到mmap中的数据并没有被真正的写到硬盘，操作系统会在程序主动调用flush的时候才把数据真正的写到硬盘。Kafka提供了一个参数——producer.type来控制是不是主动flush；如果Kafka写入到mmap之后就立即flush然后再返回Producer叫同步(sync)；写入mmap之后立即返回Producer不调用flush叫异步(async)。</p>
 </li>
-<li><p>sendfile<br>Linux 2.4+ 内核通过 sendfile 系统调用提供了零拷贝。磁盘数据通过 DMA 拷贝到内核态 Buffer 后，直接通过 DMA 拷贝到 NIC Buffer(socket buffer)，相比传统IO的4次copy，减少了2次 CPU 拷贝。这也是零拷贝这一说法的来源。除了减少数据拷贝外，因为整个读文件 - 网络发送由一个 sendfile 调用完成，整个过程只有两次上下文切换，因此大大提高了性能。零拷贝过程如下图所示。<br><img src="/images/articleimg/kafkazerocopy.jpg" alt="传统拷贝"><br>这项零拷贝技术，直接从内核空间（DMA的）到内核空间（Socket的)、然后发送网卡。<br>应用的场景非常多，如Tomcat、Nginx、Apache等web服务器返回静态资源等，将数据用网络发送出去，都运用了sendfile。</p>
+<li><p>sendfile<br>Linux 2.4+ 内核通过 sendfile 系统调用提供了零拷贝。磁盘数据通过 DMA 拷贝到内核态 Buffer 后，直接通过 DMA 拷贝到 NIC Buffer(socket buffer)，相比传统IO的4次copy，减少了2次 CPU 拷贝。这也是零拷贝这一说法的来源。除了减少数据拷贝外，因为整个读文件 - 网络发送由一个 sendfile 调用完成，整个过程只有两次上下文切换，因此大大提高了性能。零拷贝过程如下图所示。<br><img src= "/img/loading.gif" data-lazy-src="/images/articleimg/kafkazerocopy.jpg" alt="传统拷贝"><br>这项零拷贝技术，直接从内核空间（DMA的）到内核空间（Socket的)、然后发送网卡。<br>应用的场景非常多，如Tomcat、Nginx、Apache等web服务器返回静态资源等，将数据用网络发送出去，都运用了sendfile。</p>
 </li>
 </ul>
 <h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
@@ -124,7 +124,7 @@
 <p>链接：<br>Kafka官网：<a href="http://kafka.apache.org/">http://kafka.apache.org/</a><br>Kafka深度解析：<a href="http://www.jasongj.com/2015/01/02/Kafka%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/">http://www.jasongj.com/2015/01/02/Kafka%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/</a><br>零拷贝：<a href="https://zhuanlan.zhihu.com/p/78335525">https://zhuanlan.zhihu.com/p/78335525</a></p>
 ]]></content>
       <categories>
-        <category>技术</category>
+        <category>技术积累</category>
       </categories>
       <tags>
         <tag>Kafka</tag>
@@ -194,6 +194,9 @@
 <h3 id="小知识"><a href="#小知识" class="headerlink" title="小知识++"></a>小知识++</h3><h5 id="更改GitHub默认显示分支："><a href="#更改GitHub默认显示分支：" class="headerlink" title="更改GitHub默认显示分支："></a>更改GitHub默认显示分支：</h5><p>当前GitHub默认分支为main，更改为常见的master。<br>项目主页-&gt; Settings-&gt;Branches-&gt;Default branch:修改为master</p>
 <h5 id="butterfly-Hexo主题："><a href="#butterfly-Hexo主题：" class="headerlink" title="butterfly Hexo主题："></a>butterfly Hexo主题：</h5><p>源码：<a href="https://github.com/jerryc127/hexo-theme-butterfly">https://github.com/jerryc127/hexo-theme-butterfly</a><br>指导手册：<a href="https://butterfly.js.org/">https://butterfly.js.org/</a><br>作者博客：<a href="https://jerryc.me/">https://jerryc.me/</a><br>博客：<a href="http://www.rwyqboy.top/">http://www.rwyqboy.top/</a><br>站点美化：<a href="https://butterfly.lete114.top/article/Butterfly-config.html">Lete乐特</a>; <a href="https://www.antmoe.com/posts/a811d614/index.html">小康</a>; <a href="https://akilar.top/posts/7c16c4bb/">Hexo日记</a></p>
 ]]></content>
+      <categories>
+        <category>技术积累</category>
+      </categories>
       <tags>
         <tag>Hexo</tag>
       </tags>
@@ -212,6 +215,9 @@
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br><span class="line">or</span><br><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
+      <categories>
+        <category>技术积累</category>
+      </categories>
       <tags>
         <tag>Hexo</tag>
       </tags>
@@ -219,7 +225,7 @@
   <entry>
     <title>英语语法概述</title>
     <url>/2021/01/24/%E8%8B%B1%E8%AF%AD%E8%AF%AD%E6%B3%95%E6%A6%82%E8%BF%B0/</url>
-    <content><![CDATA[<p>导语：英语语法的目的是造句，其核心就是<strong>动词</strong>，动词几乎能串起所有整个英语语法体系。<br><img src="/images/articleimg/EnglishGrammar.png" alt="语法体系的主体框架"></p>
+    <content><![CDATA[<p>导语：英语语法的目的是造句，其核心就是<strong>动词</strong>，动词几乎能串起所有整个英语语法体系。<br><img src= "/img/loading.gif" data-lazy-src="/images/articleimg/EnglishGrammar.png" alt="语法体系的主体框架"></p>
 <h3 id="简单句-simple-sentences"><a href="#简单句-simple-sentences" class="headerlink" title="简单句(simple sentences)"></a>简单句(simple sentences)</h3><p>几乎所有的英语句子都是：什么+怎么样结构，即主＋谓结构<br>主语: 人或物<br>谓语: 发生了什么事（”动作”）<br>简单句的5种基本句型：</p>
 <table>
 <thead>
@@ -262,9 +268,9 @@
 </tr>
 </tbody></table>
 <p>PS：<br>1.宾语：动作的承受者。<br>2.间接宾语一般为人，.直接宾语一般为物。如上教授的知识是英语，而知识的接受对象是你。这里可以讲兔教英语，完整了，英语是直接宾语；但讲兔教你，没上下文的话是缺内容的，所以你是间接宾语。<br>3.连系动词：linking而已，代表“=”，即赋予主语某种性质状态划等号的动词，后者为前者的一种属性。<br>4.及物动词：没有承受者就没有实际意义，如like。<br>5.宾语补足语（补语）：补充承受者的信息才能使得句意完整，复杂及物动词必须要该结构才能组成句子，如上表的smart。<br>6.主语补足语（表语）：补充说明主语的属性，用于主系表中。<br>7.谓语和谓语动词：句子主语后面余下的句子部分就是谓语；谓语动词知识谓语的一部分。<br>8.7强调谓语动词，是因为还有非谓语动词。<br>9.定语：用来修饰主语或宾语。eg：<strong>the little white</strong> rabbit ate <strong>a large</strong> carrot.<br>10.状语：用来修饰谓语动词。eg：the rabbit ate <strong>quickly</strong>.<br>11.同位语：用来把主语或宾语用不同方式再说一遍，像唐僧。。eg：papa rabbit, <strong>an english teacher</strong>, eats a carrot. eg：我，秦始皇，打钱！</p>
-<p>英语中涉及的所有<strong>句子成分</strong>只有8种，上面都分析到了，这里做个小结：<br><img src="/images/articleimg/partsOfSpeech.png" alt="句子8种成分"></p>
+<p>英语中涉及的所有<strong>句子成分</strong>只有8种，上面都分析到了，这里做个小结：<br><img src= "/img/loading.gif" data-lazy-src="/images/articleimg/partsOfSpeech.png" alt="句子8种成分"></p>
 <h3 id="复合句-amp-复杂句"><a href="#复合句-amp-复杂句" class="headerlink" title="复合句 &amp; 复杂句"></a>复合句 &amp; 复杂句</h3><p>上面讲的都为简单句，但平时不都是简单句的使用，会把简单句组合，形成复合句和复杂句。<br>compound sentences 复合句（并列句）：简单句+简单句，句子简单的叠加，是并列关系。</p>
-<p>complex sentences 复杂句：一个句子套在另一个句子里，可以一直套娃，是从属关系。（坑：有的语法书叫成了复合句，误导人儿）<br>主句和从句：句子套句子操作：语法中分别叫main clause 主句；subordinate clause 从句。从句说白了就是把简单句修改一下，做另一个句子的<strong>句子成分</strong>。<br>英语这种“套娃”的从句，和中文习惯差别大，所以是语法的难点之一。<br><img src="/images/articleimg/subordinateClause.png" alt="从句"></p>
+<p>complex sentences 复杂句：一个句子套在另一个句子里，可以一直套娃，是从属关系。（坑：有的语法书叫成了复合句，误导人儿）<br>主句和从句：句子套句子操作：语法中分别叫main clause 主句；subordinate clause 从句。从句说白了就是把简单句修改一下，做另一个句子的<strong>句子成分</strong>。<br>英语这种“套娃”的从句，和中文习惯差别大，所以是语法的难点之一。<br><img src= "/img/loading.gif" data-lazy-src="/images/articleimg/subordinateClause.png" alt="从句"></p>
 <h3 id="词类"><a href="#词类" class="headerlink" title="词类"></a>词类</h3><p>词性（词类）：句子成分和单词类型是两个概念，就是同一类句子成分里可能有不同的词类。<br>英语的10大词类：</p>
 <table>
 <thead>
@@ -336,10 +342,10 @@
 <td>前面的重点，写好多了，这里不写了</td>
 </tr>
 </tbody></table>
-<p>加幅图~ 看一下句子成分和词类的关系。<br><strong>每种句子成分，除了谓语动词一定是动词外，其他都可能包含不同的词类。</strong><br><img src="/images/articleimg/sentencesAndWords.png" alt="句子成分&amp;词类"></p>
-<h3 id="谓语动词“三大本领”"><a href="#谓语动词“三大本领”" class="headerlink" title="谓语动词“三大本领”"></a>谓语动词“三大本领”</h3><p>表达动作的<strong>时间-状态-语气</strong>，也称ATM（Aspect-Tense-Mood）。<br>1.表示动作的时间：<br>2.表示动作的状态：<br>合称时态：<br>时态：就是谓语动词的时间和状态的排列组合！理论上有4种时间*4状态=16种时态。是英语难点之一，因为中文动词没有这个特性。<br>2.表示动作的假设、情感等：<br>也叫动词的<strong>语气</strong>，这是语法的“语气”（不是平时说话的语气。。）<br>虚拟语气：表意愿、和事实相反的假设等。if i <strong>were</strong> a rabbit.<br><img src="/images/articleimg/verb.png" alt="谓语动词的3个特点"><br>助动词：因为谓语动词往往不能独立完成ATM，也无法独立完成表示否定、可能性、必须性的意思。因此需要另一类词的帮助完成任务，即助动词。它没有实意，只是帮助谓语动词的小伙伴。<br>下面是它协助的一个小例子：<br><img src="/images/articleimg/auxiliaryVerbs.png" alt="助动词"><br>很多助动词，也可以做实义动词，甚至其他词性。<strong>千万不要把助动词和它的其他身份混淆</strong>。其他身份eg：can：易拉罐；do：做某事；have：拥有；be：存在。</p>
-<h3 id="非谓语动词"><a href="#非谓语动词" class="headerlink" title="非谓语动词"></a>非谓语动词</h3><p>非谓语动词：<strong>是改动后的谓语动词</strong>。可以充当出谓语动词外的所有句子成分；取代几乎<strong>所有的从句</strong>，从而<strong>简化句子</strong>。但是非谓语动词同时也丧失了ATM的本领。。<br>它以不同形式出现在句中：有动词不定时、现在分词、动名词、过去分词，它们与谓语动词的不同状态看起来很像，需要结合句子成分区分，也是语法的一个难点。如下：<br><img src="/images/articleimg/verbs2.png" alt="非谓语动词的形式&amp;与谓语动词"></p>
-<h3 id="太长不看版本"><a href="#太长不看版本" class="headerlink" title="太长不看版本"></a>太长不看版本</h3><p>英语语法的核心就是动词<br>动词<br>谓语动词<br>（囊括 主语，谓语动词，宾语，宾语补语，主语补语（表语））<br>  不及物动词—主 动<br>  单及物动词—主 动 宾<br>  双及物动词—主 动 间宾 直宾<br>  混合及物动词—主 动 宾 宾补<br>  系动词—主 动 表<br>  定语，状语，表语<br> 复合句（并列）<br> 复杂句（复杂）<br>  主句<br>  从句（可以充当所有句子成分）<br>   句子成分可以由词类充当（词类：动词，名词，代词，冠词，形容词，数词，副词，介词，叹词，连词）<br> 谓语动词可以表达ATM（时间，状态，语气）等，但是需要用到助动词<br>  助动词帮助否定动词表达时态 语气 否定 被动 可能 义务…<br>非谓语动词<br> 简化句子</p>
+<p>加幅图~ 看一下句子成分和词类的关系。<br><strong>每种句子成分，除了谓语动词一定是动词外，其他都可能包含不同的词类。</strong><br><img src= "/img/loading.gif" data-lazy-src="/images/articleimg/sentencesAndWords.png" alt="句子成分&amp;词类"></p>
+<h3 id="谓语动词“三大本领”"><a href="#谓语动词“三大本领”" class="headerlink" title="谓语动词“三大本领”"></a>谓语动词“三大本领”</h3><p>表达动作的<strong>时间-状态-语气</strong>，也称ATM（Aspect-Tense-Mood）。<br>1.表示动作的时间：<br>2.表示动作的状态：<br>合称时态：<br>时态：就是谓语动词的时间和状态的排列组合！理论上有4种时间*4种状态=16种时态。是英语难点之一，因为中文动词没有这个特性。<br>2.表示动作的假设、情感等：<br>也叫动词的<strong>语气</strong>，这是语法的“语气”（不是平时说话的语气。。）<br>虚拟语气：表意愿、和事实相反的假设等。if i <strong>were</strong> a rabbit.<br><img src= "/img/loading.gif" data-lazy-src="/images/articleimg/verb.png" alt="谓语动词的3个特点"><br>助动词：因为谓语动词往往不能独立完成ATM，也无法独立完成表示否定、可能性、必须性的意思。因此需要另一类词的帮助完成任务，即助动词。它没有实意，只是帮助谓语动词的小伙伴。<br>下面是它协助的一个小例子：<br><img src= "/img/loading.gif" data-lazy-src="/images/articleimg/auxiliaryVerbs.png" alt="助动词"><br>很多助动词，也可以做实义动词，甚至其他词性。<strong>千万不要把助动词和它的其他身份混淆</strong>。其他身份eg：can：易拉罐；do：做某事；have：拥有；be：存在。</p>
+<h3 id="非谓语动词"><a href="#非谓语动词" class="headerlink" title="非谓语动词"></a>非谓语动词</h3><p>非谓语动词：<strong>是改动后的谓语动词</strong>。可以充当除谓语动词外的所有句子成分；取代几乎<strong>所有的从句</strong>，从而<strong>简化句子</strong>。但是非谓语动词同时也丧失了ATM的本领。。<br>它以不同形式出现在句中：有动词不定时、现在分词、动名词、过去分词，它们与谓语动词的不同状态看起来很像，需要结合句子成分区分，也是语法的一个难点。如下：<br><img src= "/img/loading.gif" data-lazy-src="/images/articleimg/verbs2.png" alt="非谓语动词的形式&amp;与谓语动词"></p>
+<h3 id="太长不看版本"><a href="#太长不看版本" class="headerlink" title="太长不看版本"></a>太长不看版本</h3><p>英语语法的核心就是动词<br>动词<br>谓语动词<br>（囊括 主语，谓语动词，宾语，宾语补语，主语补语（表语））<br>不及物动词—主 动<br>单及物动词—主 动 宾<br>双及物动词—主 动 间宾 直宾<br>混合及物动词—主 动 宾 宾补<br>系动词—主 动 表<br>定语，状语，表语<br>复合句（并列）<br>复杂句（复杂）<br>主句<br>从句（可以充当所有句子成分）<br>句子成分可以由词类充当（词类：动词，名词，代词，冠词，形容词，数词，副词，介词，叹词，连词）<br>谓语动词可以表达ATM（时间，状态，语气）等，但是需要用到助动词<br>助动词帮助否定动词表达时态 语气 否定 被动 可能 义务…<br>非谓语动词<br>简化句子</p>
 <p>英语语法细节很多，本文仅整理了一个脉络，如有错漏，请指正。</p>
 <p>参考资料：<br>1.视频讲英语语法体系：<a href="https://www.bilibili.com/video/BV1r54y1m7gd?from=search&amp;seid=13838203267352976271">https://www.bilibili.com/video/BV1r54y1m7gd?from=search&amp;seid=13838203267352976271</a><br>2.补充语法概述资料：<a href="https://www.zhihu.com/question/30030877/answer/1253564096">https://www.zhihu.com/question/30030877/answer/1253564096</a></p>
 ]]></content>
@@ -347,7 +353,181 @@
         <category>英语语法</category>
       </categories>
       <tags>
-        <tag>英语 - 语法</tag>
+        <tag>英语</tag>
+        <tag>语法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>英语16种时态详解</title>
+    <url>/2021/02/06/%E8%8B%B1%E8%AF%AD16%E7%A7%8D%E6%97%B6%E6%80%81%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<p>时态概念：4种动词时间+4种动词状态 –&gt; 16种英语时态。</p>
+<h3 id="综述"><a href="#综述" class="headerlink" title="综述"></a>综述</h3><ol>
+<li>时间：过去、现在、将来、过去将来<br>过去将来：对于过去某一个时间点来讲的将来，与现在没半毛钱关系（不常见，一般只出现于从句中）。</li>
+<li>状态：进行、完成、完成进行、一般<br>完成状态：只表示动作状态完成了，没有指出动作发生的时间。<br>完成进行状态：动作已经完成了一部分，没有停，还在进行。<br>一般状态：默认的，简单的，一般的。<br><img src= "/img/loading.gif" data-lazy-src="/images/articleimg/tense.png" alt="16种时态"><br>ps: past present future perfect progressive simple tense</li>
+</ol>
+<h3 id="时态4个难点"><a href="#时态4个难点" class="headerlink" title="时态4个难点"></a>时态4个难点</h3><ol>
+<li>时&amp;态 未分清：实际是排列组合，4种状态在时间轴上移动；</li>
+<li>动词变位现象：单词拼写会改变，时态变位和人称变位；</li>
+<li>助动词：和后面的实义动词一样也有变位；</li>
+<li>与其他语法概念混合在一起：+情态+时间+否定+被动…</li>
+</ol>
+<h3 id="一般现在时态"><a href="#一般现在时态" class="headerlink" title="一般现在时态"></a>一般现在时态</h3><table>
+<thead>
+<tr>
+<th>构成</th>
+<th>栗子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+动词原型</td>
+<td>you <strong>eat</strong> carrots.</td>
+</tr>
+<tr>
+<td>+动词原型+s（第三人称单数）</td>
+<td>the rabbit <strong>eats</strong> carrots.</td>
+</tr>
+</tbody></table>
+<h4 id="用途："><a href="#用途：" class="headerlink" title="用途："></a>用途：</h4><ol>
+<li>表达事实：只表达事实陈述。没有状态，时间限制，和现在关系不大。eg：i eat carrots. the sun rises in the east.</li>
+<li>表达习惯/重复的动作：其实可归类到1。eg：i play basketball.我有打球的习惯</li>
+<li>表示预计发生的事。</li>
+</ol>
+<h3 id="现在进行时态"><a href="#现在进行时态" class="headerlink" title="现在进行时态"></a>现在进行时态</h3><p>定义：==中文正在做某事。<br>构成：助动词be的变位+动词的现在分词。</p>
+<h4 id="be："><a href="#be：" class="headerlink" title="be："></a>be：</h4><ol>
+<li>（连）系动词，eg：i am a smart rabbit.</li>
+<li> 助动词，构成时态，be的变位如下：<br>i <strong>am</strong>；you/we/they <strong>are</strong>；she/he/it <strong>is</strong></li>
+</ol>
+<h4 id="现在分词："><a href="#现在分词：" class="headerlink" title="现在分词："></a>现在分词：</h4><ol>
+<li>通常：+ing；eg：looking；smelling；tasting</li>
+<li>有些动词在此基础改拼写，这样不规则的写其实是为了方便发音<br>write-&gt;writing（x-&gt;writeing）；hit-&gt;hitting（x-&gt;hiting）；die-&gt;dying（x-&gt;dieing）</li>
+</ol>
+<h4 id="eg"><a href="#eg" class="headerlink" title="eg"></a>eg</h4><p>i eat a carrot. -&gt; i <strong>am eating</strong> a carrots.正在吃<br>the rabbit/you <strong>are watching</strong> my video.正在看</p>
+<h3 id="现在完成时态"><a href="#现在完成时态" class="headerlink" title="现在完成时态"></a>现在完成时态</h3><p>定义：完成了动作，并对现在造成了影响。比如我已经吃掉了萝卜，暗示现在没得吃了。<br>构成：助动词have的变位+动词的过去分词。</p>
+<h4 id="have"><a href="#have" class="headerlink" title="have"></a>have</h4><ol>
+<li>实义动词，表示“有”。eg：i have some coins for this video.</li>
+<li>助动词，构成时态，have的变位如下：<br>i/you/we/they <strong>have</strong>；she/he/it <strong>has</strong></li>
+</ol>
+<h4 id="过去分词"><a href="#过去分词" class="headerlink" title="过去分词"></a>过去分词</h4><ol>
+<li>通常：+ed；eg：looked；smelled；tasted</li>
+<li>有些动词是“不规则变化”，不规则变位，实际是少数动词符合某种特殊规律的变位（<a href="https://www.yingyutu.com/bgz%EF%BC%89">https://www.YingYuTu.com/bgz）</a><br>eat，give，see，fall-&gt;eaten，given，seen，fall<strong>en</strong>；词尾+en<br>brought，bring，buy，fight，think-&gt;brought，bought，fought，th<strong>ought</strong>；改成词尾ought.<br>felt，feel，keep，sleep，leave-&gt;felt，kept，slept，left；改下拼写再+t<br>ps：过去分词 != 过去式</li>
+</ol>
+<h4 id="eg-1"><a href="#eg-1" class="headerlink" title="eg"></a>eg</h4><p>i eat carrots. -&gt; i <strong>have eaten</strong> carrots. 曾经吃过，是见过世面的人儿。<br>you have watched my vidio.到现在为止已经看过了</p>
+<h4 id="现在完成进行时态："><a href="#现在完成进行时态：" class="headerlink" title="现在完成进行时态："></a>现在完成进行时态：</h4><p>定义：对于现在的时间点，不但已经完成了一部分，而且还要继续进行的动作。比如我现在已经学习了一部分，还要继续学习。<br>构成：have的变位+been+动词的现在分词；是又进行态+完成态的组合，分析如下：<br><img src= "/img/loading.gif" data-lazy-src="/images/articleimg/persentPrefectProgressiveTense.png" alt="现在完成进行时态的由来"><br>i eat carrots. -&gt; i have been eating carrots. 到目前为止不但已经吃了些，还要继续吃。<br>i have been thinking of you. 到目前为止已经想了一段时间了，还要再继续想一会儿。</p>
+<h3 id="一般过去时态"><a href="#一般过去时态" class="headerlink" title="一般过去时态"></a>一般过去时态</h3><p>过去时间的四种时态，其实就是把现在时间的四种时态往前推一个时间段而已。<br>构成：+动词的过去式，而且各个人称都一样的。<br>eg：i/you/we/she/he/it/they <strong>ate</strong> a carrot yesterday.<br>ps：<br>1.eat（原型）-&gt; ate（过去式）-&gt;eaten（过去分词）；动词过去式和动词过去分词混淆了。i <strong>eat</strong> a carrot. != i <strong>have eaten</strong> a carrot.<br>2.动词过去式也不要与时态的过去时搞混了：过去式是动词的一种变位；过去时指过去这种时间，包含4种时态。</p>
+<h4 id="过去式"><a href="#过去式" class="headerlink" title="过去式"></a>过去式</h4><p>定义：单纯的表达动作发生了，动作多久？合适开始和结束都没有表达出来。可以看成是“一张照片”。<br>1.通常：+ed；looked；smelled；tasted<br>2.有些动词是“不变化规则”，如下常用的，完整的“规律”见（<a href="https://www.yingyutu.com/bgz%EF%BC%89">https://www.YingYuTu.com/bgz）</a><br><img src= "/img/loading.gif" data-lazy-src="/images/articleimg/pastVerbs.png" alt="动词的不规则过去式变化"><br>eg：<br>1.you watched my video.看了我的视频，言下之意，这是事实，别抵赖哦。<br>2.i thought of you. 想你了，言下之意，这是事实，不骗你。<br>ps：<br>1.现在的习惯动作：i play basketball.我打篮球，是个兴趣爱好。<br>2.过去的动作：<br>i played basketball.我打了篮球（xxx 并不能看出是否是重复动作）<br>i used to play basketball.我曾经常打篮球（vvv 用used to表示过去经常）</p>
+<p>未完待续。。。</p>
+<!--
+时态的概念：动作的时间+动作的状态 
+P1
+时间：现在 过去 将来 过去将来
+状态：一般 完成 进行 完成进行 
+理论上拥有16种时态（国内传统英语语法）
+ 以下是导航
+动词时间2：00-3：20
+动词时态 3：20-7：15
+动词时间+状态 7：15-结尾（张三乱入[妙啊]）
+P2
+时态的四大难点：  
+① 时与态 未分清（开头-1：03）
+ 掌握要求：理解时与态是如何合体的
+②动词变位（1：03-2：18）
+  eat变成ate  eat 变成eats都属于动词变位
+含义：汉字表示时间信息无需加笔画 一般加个词     单词表示时间在原基础上稍加改动
+③助动词（2：18-2：53）
+难点在于有时出现有时不出现 难以判断
+④与其他语法概念混合（2：53-结尾）
+   加否定 加情态动词 等
+P3
+时态的构成 -一般现在时
+ 格式：+动词原形/+动词原形+s（三单）
+常见的三种情况：1 表达事实 2表达习惯/重复的动作 3表示预计发生的事情
+P4 
+现在进行时态
+格式：助动词be的变位+动词的现在分词
+be作为动词 有两个主要身份：
+1（连）系动词
+2 助动词，构成时态
+现在分词通常：+ing （注意有些动词改变拼写）
+P5
+现在完成时
+构成：助动词have的变位+动词的过去分词
+have的身份：1实义动词 2助动词，构成时态
+过去分词通常：+ed 注意有些动词是不规则变化
+注意：过去分词不等于过去式
+P6
+现在完成进行时态
+构成：have的变位+been+动词的现在分词
+很简单 是上面两种的结合体
+ be充当动词 过去式变成been
+P7
+一般过去时态
+构成：+动词过去式
+再次提醒：过去式不等于过去分式
+通常：+ed （过去式和过去分式 有些有规律 有些无规律 需背 ）
+表示过去的习惯动作
+P8
+三种时态的辨析
+现在完成时 vs一般过去时态
+前者侧重点是某个动作是否在说这句话前完成
+后者侧重点描述某个动作到底在过去有没有发生
+一般过去时vs过去进行时
+前者侧重点是某个动作做了没有
+后者侧重点某个动作在某个时间是在进行过程中
+过去完成时
+助动词have的变位+动词的过去分词（与现在完成时类似 不过have变位不同 该处变成had）
+表示过去某一点（A）的过去（B）对过去那一点（A）的影响
+p10
+过去完成进行时态
+构成：have的变位+be的过去分词（been）+动词的现在分词  （与现在完成进行时类似）
+表达对于过去某个点 ，不但完成了一部分，还要继续下去的动作 
+p11
+将来时态需要助动词帮忙
+一般现在时表将来动作
+助动词be的变位+going+to+动词原形
+（going省略 变成 助动词be的变位+to+动词原形
+还可以用about代替going 即：be+about+to+动词原形）
+一般将来时 
+构成：will+动词过去式
+可用来描述：将来某个时间点发生的动作（说话者十分确定会发生的事）
+不太确定的话 不能用一般将来时（要借助动词的“语气”）
+p12
+将来进行时
+构成：will+be+动词的现在分词（与现在进行时类似）
+可用来描述 在将来某个时间，某个动作是进行的过程中
+p13
+将来完成时态
+构成：will+助动词have的变位+动词的过去分词（与现在完成时类似）
+表示将来某一点（A）的过去（B和现在的前后不确定）对将来那一点（A）的影响
+p14
+将来完成进行时态
+构成：will+have+been+动词的现在分词（与现在完成进行时类似）
+表示将来某个点不但已经完成一部分而且还要继续进行的动作
+p15
+过去将来时态
+构成：would+动词原形（由一般将来时will变成would）
+would的多义：will的过去式     动词的虚拟语气       表示礼貌
+过去将来进行时
+构成：would be 动词现在分词
+过去将来完成时
+构成：would have 动词的过去分词
+过去将来完成进行时态（？）
+构成：would have been 动词的现在分词
+p几来着？
+总结 
+常用时态为8种
+将来时态较简单
+基础差多次各个击破剩下是个人的一些感想 
+首先很高兴能看到质量如此高的学习资料视频  感谢英语兔的良苦用心 另外就是关于时态 个人认为都是几种方式的变通 还有就是最好看视频  视频中有许多例句可以帮助理解  如有漏掉的知识点 欢迎同学在下面补充  祝你学习愉快
+-->
+
+<p>参考资料：<br>1.英语兔时态：<a href="https://www.bilibili.com/video/BV1Sv411y7d8?p=1">https://www.bilibili.com/video/BV1Sv411y7d8?p=1</a></p>
+]]></content>
+      <categories>
+        <category>英语语法</category>
+      </categories>
+      <tags>
+        <tag>英语</tag>
+        <tag>语法</tag>
       </tags>
   </entry>
 </search>
